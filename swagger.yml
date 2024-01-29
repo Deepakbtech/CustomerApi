@@ -1,0 +1,192 @@
+---
+openapi: 3.0.1
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  "/register":
+    post:
+      tags:
+        - customer-controller
+      operationId: registerCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Customer"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/TokenResponse"
+  "/token":
+    post:
+      tags:
+        - token-controller
+      operationId: retrieveToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TokenRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/TokenResponse"
+  "/logon":
+    post:
+      tags:
+        - token-controller
+      operationId: logon
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TokenRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  "/overview":
+    get:
+      tags:
+        - account-overview-controller
+      operationId: retrieveOverview
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/AccountDto"
+components:
+  schemas:
+    TokenRequest:
+      type: object
+      properties:
+        userName:
+          type: string
+        password:
+          type: string
+        token:
+          type: string
+    TokenResponse:
+      type: object
+      properties:
+        userName:
+          type: string
+        password:
+          type: string
+        token:
+          type: string
+    Account:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        ibanAccount:
+          type: string
+        balance:
+          type: number
+        type:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        customer:
+          "$ref": "#/components/schemas/Customer"
+    Address:
+      type: object
+      properties:
+        houseNumber:
+          type: integer
+          format: int32
+        houseNumberExtension:
+          pattern: "^[a-zA-Z0-9]*$"
+          type: string
+        streetName:
+          pattern: ^[A-Za-zÀ-ž0-9@'"\ \-\/.]+$
+          type: string
+        postalCode:
+          pattern: "^[0-9]{4}-?[A-Za-z]{2}$"
+          type: string
+        city:
+          pattern: "^[a-zA-Z]*$"
+          type: string
+        country:
+          pattern: "^[a-zA-Z]*$"
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    Customer:
+      required:
+        - name
+        - userName
+      type: object
+      properties:
+        name:
+          pattern: "^[a-zA-Z0-9]*$"
+          type: string
+        userName:
+          pattern: "^[a-zA-Z0-9]*$"
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        address:
+          "$ref": "#/components/schemas/Address"
+        account:
+          "$ref": "#/components/schemas/Account"
+        customerCredentials:
+          "$ref": "#/components/schemas/CustomerCredentials"
+        customerIdentification:
+          "$ref": "#/components/schemas/CustomerIdentification"
+        createdAt:
+          type: string
+          format: date-time
+    CustomerCredentials:
+      type: object
+      properties:
+        userName:
+          pattern: "^[a-zA-Z0-9]*$"
+          type: string
+        password:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    CustomerIdentification:
+      type: object
+      properties:
+        type:
+          type: string
+        details:
+          type: string
+        otp:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    AccountDto:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        ibanAccount:
+          type: string
+        balance:
+          type: number
+        type:
+          type: string
