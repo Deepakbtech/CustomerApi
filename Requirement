@@ -1,0 +1,57 @@
+Assignment Overview
+XYZ bank still has a number of legacy systems causing poor customer experience. The onboarding and account opening systems still need customers to visit the branch for verifications.
+As part of their digital initiative, a new project is launched with the objective that customer can register and open a new account remotely using any electronic device.
+The assignment is to create backend REST APIs needed for this project.
+ 
+Functional requirement
+✓ Customer must be able to register to bank with basic details such as Name, Address, Date of birth, an “ID” document and an OTP received on mobile number (provided earlier).
+✓ Customer must provide a unique username. If username already exist, they should get an error.
+✓ Once customer is registered automatically Unique IBAN account number should be assigned as per NL IBAN format. ( What is IBAN -> https://en.wikipedia.org/wiki/International_Bank_Account_Number)
+✓ Default password must be generated
+✓ Customer must be able to login with the selected username and default password. (Not necessary to encrypt password)
+✓ Customer must be able to see some account details like account balance and type of account
+✓ Any customer outside Netherlands and Belgium must not be able to register and create account
+✓ It should be possible to add new countries in the allowed list ‘easily’.
+✓ Customers above 18 year age are only allowed to register and create account
+APIs overview
+API Endpoint
+Responsibility
+Expected Output
+http://localhost:8080/register
+Register customer with basic details : Name, Address, dob, ID document, username and OTP
+Returns success response with user name and random password
+Return failed response with proper message in case of failures
+http://localhost:8080/token
+Get the token using basic auth credentials
+Bearer Token
+http://localhost:8080/logon
+Customer login using token
+Success response or Invalid token
+http://localhost:8080/overview
+Provide customer overview
+Account overview which returns account number, account type, balance, and currency
+ 
+Please note there might be other internal backend APIs needed to meet all the functional requirements but only these ones are exposed APIs
+Technical Requirement
+✓ Create swagger OpenAPI (yaml) specification document which includes all three mentioned endpoints
+✓ Postman collection which covers different scenarios
+✓ Assume existing database is legacy and cannot handle more than 2 request per second. Make sure API is not putting load on DB.
+✓ Build application using maven or grade
+✓ Good coverage of Junit
+✓ Preferred coding Language: Java
+✓ Build tool: Maven /Gradle
+✓ Framework: Springboot
+✓ Database : MySQL or anyother database you prefer
+ 
+Deliverables :
+Git public repository link for code and documentation. (Please do not send code and document over email)
+Document should have clear instruction to run application on any local machine
+Postman collection which covers different scenario of API
+ 
+Bonus points for :
+• Thought out design
+• Clean and defect free code
+• Clear description of request and response OpenAPI (yaml) specification
+• Run REST API as container (Docker)
+• Code coverage more than 60 %
+ 
